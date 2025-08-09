@@ -1,103 +1,218 @@
+"use client";
+import { useState } from "react";
+import { Search, Loader2 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+interface Movie {
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: string;
+  Poster: string;
+  imageError?: boolean;
+}
+
+// Main App component
+export default function App() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
+  const router = useRouter();
+
+  const moviesPerPage = 10; // OMDb API returns 10 results per page
+
+  /**
+   * Fetches search results from the OMDb API for a specific page.
+   */
+  const fetchResults = async (page: number) => {
+    setIsLoading(true);
+    setError(null);
+    setResults([]);
+
+    try {
+      const apiKey = "bf881a3e";
+      const apiUrl = `https://www.omdbapi.com/?apikey=${apiKey}`;
+
+      const params = new URLSearchParams({
+        s: query,
+        type: "movie",
+        page: page.toString(),
+      });
+
+      const response = await fetch(`${apiUrl}&${params.toString()}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch data from API.");
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data.Response === "True") {
+        setResults(data.Search);
+        setTotalResults(parseInt(data.totalResults, 10));
+      } else {
+        setResults([]);
+        setTotalResults(0);
+        setError(data.Error || "No results found.");
+      }
+    } catch (err: any) {
+      setError(
+        err.message || "An error occurred while searching. Please try again."
+      );
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  /**
+   * Handles the initial search form submission.
+   */
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    if (!query.trim()) {
+      return;
+    }
+    setCurrentPage(1); // Reset to page 1 for a new search
+    fetchResults(1);
+  };
+
+  const handleMovieClick = (imdbID: any) => {
+    router.push(`/${imdbID}`);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    fetchResults(newPage);
+  };
+
+  const totalPages = Math.ceil(totalResults / moviesPerPage);
+  const showPagination = totalResults > 0;
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <section className="w-full max-w-[1240px] mx-auto px-4 xl:px-0 font-sans">
+      <div className="flex flex-col items-center justify-center min-h-screen gap-10 py-10">
+        {/* Header */}
+        <div className="flex flex-col gap-2 text-center">
+          <h1 className="text-4xl font-bold">Welcome to the App</h1>
+          <p className="text-xl text-gray-600">
+            Search your movies, series, and more right here!
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+
+        {/* Search Form */}
+        <form
+          onSubmit={handleSearch}
+          className="w-full mx-auto max-w-[500px] flex gap-x-2 items-stretch"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+          <input
+            type="text"
+            className="rounded-xl font-normal w-full px-5 py-3 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            placeholder="Search..."
+            name="query"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <button
+            type="submit"
+            className="rounded-xl font-bold text-base bg-gray-800 text-white px-5 py-3 flex justify-center items-center gap-2 transition-transform duration-200 transform active:scale-95"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Loader2 className="animate-spin" size={20} />
+            ) : (
+              <Search size={20} />
+            )}
+            <span className="hidden sm:block">Search</span>
+          </button>
+        </form>
+
+        {/* Display Area */}
+        <div className="w-full">
+          {error && (
+            <div className="text-center text-red-500 font-medium">{error}</div>
+          )}
+          {isLoading && (
+            <div className="flex items-center justify-center text-gray-500 font-medium">
+              <Loader2 className="animate-spin mr-2" size={24} />
+              Loading results...
+            </div>
+          )}
+          {!isLoading && results.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+              {results.map((item) => (
+                <div
+                  key={item.imdbID}
+                  onClick={() => handleMovieClick(item.imdbID)}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-200 hover:scale-105 cursor-pointer"
+                >
+                  <Image
+                    src={
+                      // Check if the poster URL is not 'N/A', otherwise use a placeholder image
+                      item.Poster !== "N/A"
+                        ? item.Poster
+                        : "https://placehold.co/200x300/e2e8f0/64748b?text=No+Image"
+                    }
+                    alt={item.Title || "Movie/Series poster"}
+                    width={300}
+                    height={400}
+                    className="w-full h-auto object-cover rounded-t-xl aspect-[10/16]"
+                  />
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg text-gray-900">
+                      {item.Title}
+                    </h3>
+                    <p className="text-sm text-gray-500">{item.Year}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {!isLoading &&
+            !error &&
+            results.length === 0 &&
+            query.trim() !== "" && (
+              <div className="text-center text-gray-500 font-medium">
+                No results found for "{query}".
+              </div>
+            )}
+          {!isLoading &&
+            !error &&
+            results.length === 0 &&
+            query.trim() === "" && (
+              <div className="text-center text-gray-500 font-medium">
+                Start searching for your favorite movies or series!
+              </div>
+            )}
+        </div>
+
+        {/* Pagination Controls */}
+        {showPagination && (
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="rounded-full bg-gray-800 text-white p-3 disabled:bg-gray-400 transition-transform duration-200 transform active:scale-95"
+            >
+              Previous
+            </button>
+            <span className="text-gray-700 font-semibold">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="rounded-full bg-gray-800 text-white p-3 disabled:bg-gray-400 transition-transform duration-200 transform active:scale-95"
+            >
+              Next
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
