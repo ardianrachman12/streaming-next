@@ -16,6 +16,8 @@ interface Movie {
 // Main App component
 export default function App() {
   const [query, setQuery] = useState("");
+  const [year, setYear] = useState("");
+  const [type, setType] = useState("");
   const [results, setResults] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -39,7 +41,8 @@ export default function App() {
 
       const params = new URLSearchParams({
         s: query,
-        type: "movie",
+        y: year,
+        type: type,
         page: page.toString(),
       });
 
@@ -95,7 +98,7 @@ export default function App() {
 
   return (
     <section className="w-full max-w-[1240px] mx-auto px-4 xl:px-0 font-sans">
-      <div className="flex flex-col items-center justify-center min-h-screen gap-10 py-10">
+      <div className="flex flex-col items-center justify-center gap-10 py-10">
         {/* Header */}
         <div className="flex flex-col gap-2 text-center">
           <h1 className="text-4xl font-bold">Welcome to the App</h1>
@@ -117,6 +120,13 @@ export default function App() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
+          <input type="number" name="year" value={year} onChange={(e) => setYear(e.target.value)} placeholder="Year" className="rounded-xl font-normal w-[50%] px-5 py-3 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300" />
+          <select name="type" id="" value={type} onChange={(e) => setType(e.target.value)} className="rounded-xl font-normal w-[50%] px-5 py-3 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300">
+            <option value="">All</option>
+            <option value="movie">Movies</option>
+            <option value="series">Series</option>
+            <option value="episode">Episode</option>
+          </select>
           <button
             type="submit"
             className="rounded-xl font-bold text-base bg-gray-800 text-white px-5 py-3 flex justify-center items-center gap-2 transition-transform duration-200 transform active:scale-95"
@@ -127,7 +137,7 @@ export default function App() {
             ) : (
               <Search size={20} />
             )}
-            <span className="hidden sm:block">Search</span>
+            {/* <span className="hidden sm:block">Search</span> */}
           </button>
         </form>
 

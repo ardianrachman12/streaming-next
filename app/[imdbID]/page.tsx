@@ -32,6 +32,7 @@ export default async function MovieDetailPage({ params }: any) {
 
     if (data.Response === "True") {
       movie = data;
+      // console.log("Movie details:", movie);
     } else {
       error = data.Error || "Movie details not found.";
     }

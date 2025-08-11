@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
+import Navbar from "./components/utilities/Navbar/Navbar";
 import "./globals.css";
+import Footer from "./components/utilities/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '700'], // Tentukan weight yang Anda butuhkan
+  style: ['normal', 'italic'], // Tentukan style yang Anda butuhkan
+  // Variabel CSS untuk font
+  variable: '--font-inter',
 });
 
 const geistMono = Geist_Mono({
@@ -25,9 +36,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={inter.className}
       >
-        {children}
+        <Navbar/>
+        <div className="py-10">{children}</div>
+
+        <Footer />
       </body>
     </html>
   );
