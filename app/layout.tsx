@@ -37,9 +37,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={inter.className}
+        style={{ minHeight: "100vh" }}
       >
-        <Navbar/>
-        <div className="py-10">{children}</div>
+        <Navbar />
+        <div className="">{children}</div>
 
         <Footer />
       </body>

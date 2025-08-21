@@ -23,3 +23,20 @@
 h1 {
   font-family: "Sora", sans-serif;
 }
+
+.swiper-pagination-bullet-active {
+  width: 40px !important;
+  border-radius: 10px !important;
+  /* background-color: #E5228D !important; */
+}
+.swiperMovies {
+  padding-bottom: 10px !important;
+}
+.swiper-scrollbar {
+  display: flex !important;
+  margin-top: 10px !important;
+}
+
+.swiper-scrollbar-drag {
+  background-color: #228ee5 !important;
+}
