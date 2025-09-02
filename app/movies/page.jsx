@@ -21,10 +21,10 @@ const Movies = async ({searchParams}) => {
   console.log(movies); // Log the entire response to the console
   // console.log(movies.results); // Log the movie data to the console
   return (
-    <section className="max-w-[1240px] mx-auto px-4 xl:px-0">
+    <section className="max-w-[1240px] mx-auto px-4 xl:px-0 pt-[100px]">
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold mb-4">Movies Page</h1>
-        <div className="grid grid-cols-5 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
           {movies.results.map((movie) => (
             <CardMovies key={movie.id} movie={movie} />
           ))}

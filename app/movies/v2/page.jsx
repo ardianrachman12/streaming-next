@@ -24,19 +24,19 @@ const Movies = async ({ searchParams }) => {
       <div
         className="w-full flex min-h-[725px]"
         style={{
-          backgroundImage: `url(https://image.tmdb.org/t/p/original/${movies.results[0].backdrop_path})`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://image.tmdb.org/t/p/original/${movies.results[0].backdrop_path})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="max-w-[1240px] mx-auto px-4 xl:px-0 w-full relative">
-          <div className="w-full flex flex-col max-w-[553px] gap-[20px] absolute bottom-[100px]">
-            <div className="flex flex-col gap-3">
-              <h1 className="text-[48px] font-semibold text-white">
+        <div className="max-w-[1240px] mx-auto px-4 xl:px-0 w-full relative overflow-hidden">
+          <div className="w-full flex flex-col mx-auto sm:max-w-[553px] gap-[20px] absolute bottom-[100px] max-sm:left-1/2 max-sm:-translate-x-1/2 px-4 xl:px-0">
+            <div className="flex flex-col gap-3 w-fit">
+              <h1 className="text-4xl sm:text-[48px] font-semibold text-white">
                 {movies.results[0].original_title}
               </h1>
-              <p className="font-medium text-base text-white">
+              <p className="font-medium text-base text-white text-wrap">
                 {movies.results[0].overview}
               </p>
             </div>

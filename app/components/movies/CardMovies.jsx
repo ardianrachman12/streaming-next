@@ -38,11 +38,11 @@ const CardMovies = ({ movie }) => {
       />
       <div className="flex flex-col gap-y-2 px-4 py-2 flex-grow">
         <div className="flex flex-col gap-2 flex-grow">
-          <p className="bg-gray-700 text-sm px-2 py-1 rounded-full w-fit text-white font-medium">
+          <p className="bg-gray-700 text-xs sm:text-sm px-2 py-1 rounded-full w-fit text-white font-medium">
             {formatReleaseDate(movie.release_date)}
           </p>
-          <h1 className="text-xl font-bold">{movie.original_title}</h1>
-          <p className="text-gray-600 line-clamp-3">{movie.overview}</p>
+          <h1 className="text-lg sm:text-xl font-bold">{movie.original_title}</h1>
+          <p className="text-sm sm:text-lg text-gray-600 line-clamp-3">{movie.overview}</p>
         </div>
         <Link
           href={`/movies/detail/${movie.id}`}

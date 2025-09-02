@@ -85,7 +85,7 @@ export default function App() {
   };
 
   const handleMovieClick = (imdbID: any) => {
-    router.push(`/${imdbID}`);
+    router.push(`/detail/${imdbID}`);
   };
 
   const handlePageChange = (newPage: number) => {
@@ -97,7 +97,7 @@ export default function App() {
   const showPagination = totalResults > 0;
 
   return (
-    <section className="w-full max-w-[1240px] mx-auto px-4 xl:px-0 font-sans  min-h-screen">
+    <section className="w-full max-w-[1240px] mx-auto px-4 xl:px-0 font-sans min-h-screen pt-[100px]">
       <div className="flex flex-col items-center justify-center gap-10 py-10">
         {/* Header */}
         <div className="flex flex-col gap-2 text-center">
