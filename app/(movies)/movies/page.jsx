@@ -1,6 +1,5 @@
-import CardMovies from "../components/movies/CardMovies";
-import Pagination from "../components/movies/Pagination";
-import MovieSwiper from "../components/movies/MovieSwiper";
+import CardMovies from "../../components/movies/CardMovies";
+import Pagination from "../../components/movies/Pagination";
 
 
 const Movies = async ({searchParams}) => {
