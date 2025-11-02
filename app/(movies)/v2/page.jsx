@@ -43,7 +43,7 @@ const Movies = async ({ searchParams }) => {
               </p>
             </div>
             <div className="flex gap-3">
-              <button className="flex justify-center items-center gap-1 rounded-[28px] bg-blue-400 hover:bg-blue-700 transition-all duration-300 ease-in-out px-6 py-[10px]">
+              <Link href={`/v2/detail/${movies.results[0].id}`} className="flex justify-center items-center gap-1 rounded-[28px] bg-blue-400 hover:bg-blue-600 transition-all duration-300 ease-in-out px-6 py-[10px]">
                 <div className="">
                   <img
                     src="/images/icons/play-icon.svg"
@@ -51,10 +51,10 @@ const Movies = async ({ searchParams }) => {
                     alt=""
                   />
                 </div>
-                <Link href={`/v2/detail/${movies.results[0].id}`}>
+                <div>
                   <h1 className="text-white">Watch Now</h1>
-                </Link>
-              </button>
+                </div>
+              </Link>
               <button className="flex justify-center items-center gap-1 rounded-[28px] bg-none border border-blue-400 px-6 py-[10px] hover:bg-blue-400 transition-all duration-500">
                 <h1 className="text-white">More Info</h1>
                 <div className="">
@@ -72,12 +72,12 @@ const Movies = async ({ searchParams }) => {
       <div className="mx-auto px-4 xl:px-0 w-full relative max-w-[1240px]">
         <div className="flex flex-col gap-5 py-[30px]">
           <div className="flex justify-between">
-            <h1 className="font-semibold text-[48px] text-white">Trends</h1>
+            <h1 className="font-semibold text-2xl md:text-[40px] text-white">Trends</h1>
             <Link
               href={`/v2/trending`}
               className="flex items-center gap-[10px]"
             >
-              <h2 className="text-2xl text-blue-400 font-semibold">See More</h2>
+              <h2 className="text-lg md:text-2xl text-blue-400 font-semibold">See More</h2>
               <img src="/images/icons/more-info-blue.svg" alt="" className="" />
             </Link>
           </div>
@@ -86,9 +86,9 @@ const Movies = async ({ searchParams }) => {
 
         <PopularMovies />
 
-        <div className="pb-10">
+        {/* <div className="pb-10">
           <SearchButton />
-        </div>
+        </div> */}
       </div>
     </section>
   );

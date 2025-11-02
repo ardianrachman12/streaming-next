@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -57,11 +58,18 @@ export default function SeriesDetailClient({ id }) {
     <div className="p-6 text-white">
       {/* header */}
       <div className="flex flex-col md:flex-row gap-6 mb-6">
-        <img
+        <Image
+          src={`https://image.tmdb.org/t/p/w500${series.poster_path}`}
+          className="w-full sm:w-60 rounded-lg aspect-auto"
+          alt={series.name}
+          width={700}
+          height={700}
+        ></Image>
+        {/* <img
           src={`https://image.tmdb.org/t/p/w500${series.poster_path}`}
           className="w-full sm:w-60 rounded-lg"
           alt={series.name}
-        />
+        /> */}
         <div>
           <h1 className="text-xl sm:text-2xl font-bold">{series.name}</h1>
           <p className="text-xs sm:text-base text-gray-300 mb-4 sm:line-clamp-4 lg:line-clamp-none">

@@ -23,9 +23,9 @@ const PopularMovies = async () => {
   return (
     <div className="flex flex-col gap-5 py-[30px]">
       <div className="flex justify-between">
-        <h1 className="font-semibold text-[48px] text-white">Popular</h1>
-        <Link href="#" className="flex items-center gap-[10px]">
-          <h2 className="text-2xl text-blue-400 font-semibold">See More</h2>
+        <h1 className="font-semibold text-2xl md:text-[40px] text-white">Popular</h1>
+        <Link href="/v2/popular-movies" className="flex items-center gap-[10px]">
+          <h2 className="text-lg md:text-2xl text-blue-400 font-semibold">See More</h2>
           <img src="/images/icons/more-info-blue.svg" alt="" className="" />
         </Link>
       </div>
