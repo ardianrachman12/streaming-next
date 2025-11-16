@@ -1,3 +1,6 @@
+import SubtitleList from "@/app/components/movies/v2/SubtitleList";
+import { getMovieIdFromImdb, getSubtitles } from "@/lib/subsource";
+
 const MovieDetail = async ({ params }) => {
   const { id } = await params;
 
@@ -17,6 +20,16 @@ const MovieDetail = async ({ params }) => {
   }
 
   const movie = await res.json();
+  // console.log(movie);
+
+  // Get SubSource MovieId
+  const movieId = await getMovieIdFromImdb(movie.imdb_id);
+
+  // Fetch subtitles
+  const dataSubtitles = await getSubtitles(
+    movieId.data[0].movieId,
+    "indonesian"
+  );
 
   return (
     <section className="bg-[#030A1B] min-h-screen text-white">
@@ -34,8 +47,9 @@ const MovieDetail = async ({ params }) => {
         </div>
       </div>
 
-      <div className="max-w-[1240px] mx-auto px-4 py-10 flex flex-col lg:flex-row gap-8">
-        <div className="w-full">
+      <div className="max-w-[1240px] mx-auto px-4">
+        <div className="py-10 flex flex-col lg:flex-row gap-8">
+          <div className="w-full">
             <iframe
               loading="lazy"
               src={`https://multiembed.mov/?video_id=${movie.id}&tmdb=1`}
@@ -43,35 +57,39 @@ const MovieDetail = async ({ params }) => {
               className="w-full h-full border-none aspect-video rounded-xl"
               allowFullScreen
             ></iframe>
-        </div>
+          </div>
 
-        <div className="flex flex-col gap-4">
-          <h2 className="text-3xl font-semibold">Overview</h2>
-          <p className="text-gray-300">{movie.overview}</p>
+          <div className="flex flex-col gap-4">
+            <h2 className="text-3xl font-semibold">Overview</h2>
+            <p className="text-gray-300">{movie.overview}</p>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 text-gray-300">
-            <div>
-              <h3 className="font-semibold text-white">Release Date</h3>
-              <p>{movie.release_date}</p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white">Runtime</h3>
-              <p>{movie.runtime} min</p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white">Rating</h3>
-              <p>⭐ {movie.vote_average.toFixed(1)}</p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white">Genres</h3>
-              <p>{movie.genres.map((g) => g.name).join(", ")}</p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white">Status</h3>
-              <p>{movie.status}</p>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 text-gray-300">
+              <div>
+                <h3 className="font-semibold text-white">Release Date</h3>
+                <p>{movie.release_date}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white">Runtime</h3>
+                <p>{movie.runtime} min</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white">Rating</h3>
+                <p>⭐ {movie.vote_average.toFixed(1)}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white">Genres</h3>
+                <p>{movie.genres.map((g) => g.name).join(", ")}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white">Status</h3>
+                <p>{movie.status}</p>
+              </div>
             </div>
           </div>
         </div>
+
+        <SubtitleList data={dataSubtitles.data}></SubtitleList>
+
       </div>
     </section>
   );

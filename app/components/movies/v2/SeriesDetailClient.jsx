@@ -2,12 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import SubtitleList from "../../movies/v2/SubtitleList";
 
-export default function SeriesDetailClient({ id }) {
+export default function SeriesDetailClient({ id, subtitles }) {
   const [series, setSeries] = useState(null);
   const [seasonData, setSeasonData] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [currentSeasonSub, setCurrentSeasonSub] = useState(null);
 
   useEffect(() => {
     const fetchSeries = async () => {
@@ -42,7 +44,15 @@ export default function SeriesDetailClient({ id }) {
         }
       );
       const data = await res.json();
+      // console.log(data);
       setSeasonData(data);
+
+      const currentSeasonSub = subtitles?.find(
+        (item) => item.season == selectedSeason
+      );
+
+      setCurrentSeasonSub(currentSeasonSub);
+      // console.log(currentSeasonSub);
     };
     fetchSeason();
   }, [selectedSeason, id]);
@@ -135,6 +145,8 @@ export default function SeriesDetailClient({ id }) {
               </Link>
             ))}
           </div>
+
+          <SubtitleList data={currentSeasonSub.subtitles}></SubtitleList>
         </div>
       ) : (
         <div className="flex justify-center items-center h-48">

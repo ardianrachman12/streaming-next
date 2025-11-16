@@ -16,6 +16,7 @@ const EpisodeDetail = async ({ params }) => {
   const res = await fetch(url, options);
   if (!res.ok) throw new Error("Failed to fetch episode detail");
   const episode = await res.json();
+  // console.log(episode)
 
   return (
     <section className="bg-[#030A1B] min-h-screen text-white">
