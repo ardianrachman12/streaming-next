@@ -13,6 +13,7 @@ export async function GET(req) {
         `https://api.subsource.net/api/v1/subtitles?movieId=${movieId}&language=${lang}&limit=100`,
         {
             headers: {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
                 accept: "application/json",
                 "x-api-key": process.env.SUBSOURCE_API_KEY,
             },
