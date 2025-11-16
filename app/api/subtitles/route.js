@@ -5,10 +5,11 @@ export async function GET(req) {
     const movieId = searchParams.get("movieId");
     const lang = searchParams.get("lang") ?? "indonesian";
 
-    if (!movieId)
-        return NextResponse.json({ error: "Missing movieId" }, { status: 400 });
+    if (!movieId) return NextResponse.json({ error: "Missing movieId" }, { status: 400 });
 
-    const res = await fetch(
+    console.log("🔑 API KEY:", process.env.SUBSOURCE_API_KEY ? "OK" : "MISSING");
+
+    const upstream = await fetch(
         `https://api.subsource.net/api/v1/subtitles?movieId=${movieId}&language=${lang}&limit=100`,
         {
             headers: {
@@ -18,6 +19,17 @@ export async function GET(req) {
         }
     );
 
-    const json = await res.json();
-    return NextResponse.json(json);
+    console.log("⬆ STATUS:", upstream.status);
+
+    const text = await upstream.text(); // ⬅ JANGAN langsung .json()
+    console.log("⬆ RAW RESPONSE:", text.slice(0, 300));
+
+    try {
+        return NextResponse.json(JSON.parse(text));
+    } catch (e) {
+        return NextResponse.json(
+            { error: "Upstream is not JSON", raw: text },
+            { status: 500 }
+        );
+    }
 }
