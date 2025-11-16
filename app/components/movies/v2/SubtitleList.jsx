@@ -9,7 +9,7 @@ export default function SubtitleList({ data }) {
     setDownloadingId(id);
 
     try {
-      const res = await fetch(`/api/subtitle/download/${id}`);
+      const res = await fetch(`/api/subtitles/download/${id}`);
 
       if (!res.ok) throw new Error("Download failed");
 

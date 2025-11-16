@@ -89,7 +89,6 @@ const MovieDetail = async ({ params }) => {
         </div>
 
         <SubtitleList data={dataSubtitles.data}></SubtitleList>
-
       </div>
     </section>
   );

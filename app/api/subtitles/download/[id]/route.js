@@ -6,7 +6,7 @@ export async function GET(req, { params }) {
         {
             method: "GET",
             headers: {
-                "x-api-key": process.env.NEXT_PUBLIC_SUBSOURCE_API_KEY,
+                "x-api-key": process.env.SUBSOURCE_API_KEY,
             },
         }
     );
