@@ -42,11 +42,11 @@ export default function SubtitleList({ data }) {
         data.map((sub) => (
           <div
             key={sub.subtitleId}
-            className="border border-gray-700 p-4 rounded-lg bg-gray-800/40 hover:bg-gray-800 transition flex justify-between items-start"
+            className="border border-gray-700 p-4 rounded-lg bg-gray-800/40 hover:bg-gray-800 transition flex flex-col sm:flex-row justify-between items-start gap-y-2 gap-x-3"
           >
-            <div className="space-y-1">
-              <p className="font-semibold text-base">
-                {sub.language.toUpperCase()} • {sub.releaseInfo?.join(" ")}
+            <div className="space-y-1 text-wrap flex flex-col flex-wrap w-full">
+              <p className="font-semibold text-base break-all">
+                {sub.language.toUpperCase()} • {sub.releaseInfo}
               </p>
 
               <p className="text-sm text-gray-400">
