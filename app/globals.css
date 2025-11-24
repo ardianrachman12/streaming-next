@@ -4,6 +4,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --progress-color: #4f46e5;
 }
 
 @theme inline {
@@ -39,4 +40,14 @@ h1 {
 
 .swiper-scrollbar-drag {
   background-color: #228ee5 !important;
+}
+
+#nprogress .bar {
+  background: var(--progress-color, #4f46e5);
+  height: 3px;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--progress-color, #4f46e5),
+    0 0 5px var(--progress-color, #4f46e5);
 }

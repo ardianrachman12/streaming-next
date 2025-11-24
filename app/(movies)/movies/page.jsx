@@ -17,7 +17,7 @@ const Movies = async ({searchParams}) => {
     throw new Error("Failed to fetch data");
   }
   const movies = await res.json();
-  console.log(movies); // Log the entire response to the console
+  // console.log(movies); // Log the entire response to the console
   // console.log(movies.results); // Log the movie data to the console
   return (
     <section className="max-w-[1240px] mx-auto px-4 xl:px-0 pt-[100px]">

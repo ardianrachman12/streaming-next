@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import ".././globals.css";
 import Navbar from "../components/utilities/Navbar/Navbar";
 import Footer from "../components/utilities/Footer/Footer";
+import ProgressProvider from "../provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function MoviesLayout({
   return (
     <html lang="en">
       <body className={inter.className} style={{ minHeight: "100vh" }}>
+        <ProgressProvider />
         <Navbar />
         <div className="">{children}</div>
         <Footer />

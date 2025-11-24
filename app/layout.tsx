@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "./components/utilities/Navbar/Navbar";
 import "./globals.css";
 import Footer from "./components/utilities/Footer/Footer";
+import ProgressProvider from "./provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,11 +12,11 @@ const geistSans = Geist({
 });
 
 const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '700'], // Tentukan weight yang Anda butuhkan
-  style: ['normal', 'italic'], // Tentukan style yang Anda butuhkan
+  subsets: ["latin"],
+  weight: ["400", "700"], // Tentukan weight yang Anda butuhkan
+  style: ["normal", "italic"], // Tentukan style yang Anda butuhkan
   // Variabel CSS untuk font
-  variable: '--font-inter',
+  variable: "--font-inter",
 });
 
 const geistMono = Geist_Mono({
@@ -35,10 +36,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={inter.className}
-        style={{ minHeight: "100vh" }}
-      >
+      <body className={inter.className} style={{ minHeight: "100vh" }}>
+        <ProgressProvider />
         <div className="">{children}</div>
       </body>
     </html>

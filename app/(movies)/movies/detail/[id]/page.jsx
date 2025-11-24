@@ -10,7 +10,7 @@ const MovieDetailPage = async ({ params }) => {
 
   const res = await fetch(url, options);
   const movie = await res.json();
-  console.log(movie);
+  // console.log(movie);
   return (
     <div className="bg-[#f8f8f8] min-h-screen px-4 py-[100px]">
       <div className="max-w-[1240px] mx-auto">
