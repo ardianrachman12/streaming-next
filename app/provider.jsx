@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
 export default function ProgressProvider() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // Selesai loading ketika URL berubah
   useEffect(() => {
     NProgress.done();
-  }, [pathname]);
+  }, [pathname, searchParams]);
 
   // Listener klik Link sebelum pindah page
   useEffect(() => {
