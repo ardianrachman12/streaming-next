@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import NavbarUserMenu from "../Navbar/NavbarUserMenu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +55,7 @@ const Navbar = () => {
               Search
             </h2>
           </Link>
+          <NavbarUserMenu />
 
           {/* Hamburger Icon */}
           <button

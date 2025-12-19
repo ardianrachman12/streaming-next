@@ -5,6 +5,7 @@ import ".././globals.css";
 import Navbar from "../components/utilities/Navbar/Navbar";
 import Footer from "../components/utilities/Footer/Footer";
 import ProgressProvider from "../provider";
+// import { AuthProvider } from "../../context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,7 +40,9 @@ export default function MoviesLayout({
       <body className={inter.className} style={{ minHeight: "100vh" }}>
         <ProgressProvider />
         <Navbar />
-        <div className="">{children}</div>
+        <div className="">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
