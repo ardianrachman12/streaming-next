@@ -1,8 +1,8 @@
 import CardMovies from "../../components/movies/CardMovies";
 import Pagination from "../../components/movies/Pagination";
+import { Suspense } from "react";
 
-
-const Movies = async ({searchParams}) => {
+const Movies = async ({ searchParams }) => {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
   const url = `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}`;
   const options = {
@@ -30,7 +30,9 @@ const Movies = async ({searchParams}) => {
         </div>
         {/* <MovieSwiper movies={movies} /> */}
       </div>
-      <Pagination totalPages={movies.total_pages} />
+      <Suspense fallback="{null}">
+        <Pagination totalPages={movies.total_pages} />
+      </Suspense>
     </section>
   );
 };

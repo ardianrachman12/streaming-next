@@ -5,6 +5,7 @@ import Navbar from "./components/utilities/Navbar/Navbar";
 import "./globals.css";
 import Footer from "./components/utilities/Footer/Footer";
 import ProgressProvider from "./provider";
+import { Suspense } from "react";
 import { AuthProvider } from "../context/AuthContext";
 
 const geistSans = Geist({
@@ -38,7 +39,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} style={{ minHeight: "100vh" }}>
-        <ProgressProvider />
+        <Suspense fallback="{null}">
+          <ProgressProvider />
+        </Suspense>
         <div className="">
           <AuthProvider>{children}</AuthProvider>
         </div>
