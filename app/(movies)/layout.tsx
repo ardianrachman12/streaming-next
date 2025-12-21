@@ -5,6 +5,7 @@ import ".././globals.css";
 import Navbar from "../components/utilities/Navbar/Navbar";
 import Footer from "../components/utilities/Footer/Footer";
 import ProgressProvider from "../provider";
+import { Suspense } from "react";
 // import { AuthProvider } from "../../context/AuthContext";
 
 const geistSans = Geist({
@@ -36,15 +37,15 @@ export default function MoviesLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className} style={{ minHeight: "100vh" }}>
-        <ProgressProvider />
+    // <html lang="en">
+      <section className={inter.className} style={{ minHeight: "100vh" }}>
+        <Suspense>
+          <ProgressProvider />
+        </Suspense>
         <Navbar />
-        <div className="">
-          {children}
-        </div>
+        {children}
         <Footer />
-      </body>
-    </html>
+      </section>
+    // </html>
   );
 }

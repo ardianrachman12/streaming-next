@@ -26,7 +26,7 @@ export default async function SeriesPage({ params }) {
   if (imdbId) {
     // 2️⃣ Get SubSource MovieId
     const movieData = await getMovieIdFromImdb(imdbId);
-    console.log(movieData);
+    // console.log(movieData);
 
     if (movieData?.data?.length > 0) {
       // 2️⃣ Loop setiap movieId
@@ -42,11 +42,13 @@ export default async function SeriesPage({ params }) {
       }
     }
   }
-  console.log(subtitlesResults);
+  // console.log(subtitlesResults);
 
   return (
-    <div className="w-full bg-[#030A1B] pt-[120px] pb-10">
-      <SeriesDetailClient id={id} subtitles={subtitlesResults} />
+    <div className="w-full bg-[#030A1B] pt-[120px] pb-10 min-h-screen">
+      <div className="max-w-[1240px] w-full mx-auto">
+        <SeriesDetailClient id={id} subtitles={subtitlesResults} />
+      </div>
     </div>
   );
 }

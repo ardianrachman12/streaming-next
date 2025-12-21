@@ -39,12 +39,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} style={{ minHeight: "100vh" }}>
-        <Suspense fallback="{null}">
-          <ProgressProvider />
-        </Suspense>
-        <div className="">
-          <AuthProvider>{children}</AuthProvider>
-        </div>
+        <AuthProvider>
+          <Suspense fallback={null}>
+            <ProgressProvider />
+          </Suspense>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

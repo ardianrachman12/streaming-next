@@ -23,12 +23,12 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-[10px] lg:gap-[20px] justify-between items-center">
+        <div className="hidden lg:flex gap-[10px] lg:gap-[20px] justify-between items-center">
           {[
             { name: "Movies", icon: MoviesIcon, url: "/v2" },
             { name: "TV Series", icon: TVIcon, url: "/v2/series" },
             { name: "Trending Movies", icon: FireIcon, url: "/v2/trending" },
-            { name: "Actors", icon: UsersIcon, url: "/v2/actors" },
+            // { name: "Actors", icon: UsersIcon, url: "/v2/actors" },
           ].map((item, index) => (
             <Link
               href={item.url}
@@ -48,7 +48,7 @@ const Navbar = () => {
           {/* Search */}
           <Link
             href={"/v2/search"}
-            className="flex items-center gap-2 cursor-pointer group"
+            className="hidden lg:flex items-center gap-2 cursor-pointer group"
           >
             <SearchIcon />
             <h2 className="text-white font-normal text-sm lg:text-base leading-[normal] group-hover:text-blue-300">
@@ -59,7 +59,7 @@ const Navbar = () => {
 
           {/* Hamburger Icon */}
           <button
-            className="md:hidden text-white"
+            className="lg:hidden text-white"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? (
@@ -99,18 +99,31 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden mt-3 flex flex-col gap-3 px-6 py-4 rounded-[15px] border border-white/20 bg-[rgba(26,25,25,0.85)] backdrop-blur">
+        <div className="lg:hidden mt-3 flex flex-col gap-3 px-6 py-4 rounded-[15px] border border-white/20 bg-[rgba(26,25,25,0.85)] backdrop-blur">
           {[
             { name: "Movies", icon: MoviesIcon, url: "/v2" },
             { name: "TV Series", icon: TVIcon, url: "/v2/series" },
             { name: "Trending Movies", icon: FireIcon, url: "/v2/trending" },
-            { name: "Actors", icon: UsersIcon, url: "/v2/actors" },
+            // { name: "Actors", icon: UsersIcon, url: "/v2/actors" },
           ].map((item, index) => (
-            <Link href={item.url} key={index} className="flex items-center gap-2 text-white">
+            <Link
+              href={item.url}
+              key={index}
+              className="flex items-center gap-2 text-white"
+            >
               <item.icon />
               <h2 className="text-sm">{item.name}</h2>
             </Link>
           ))}
+          <Link
+            href={"/v2/search"}
+            className="flex lg:hidden items-center gap-2 cursor-pointer group"
+          >
+            <SearchIcon />
+            <h2 className="text-white font-normal text-sm lg:text-base leading-[normal] group-hover:text-blue-300">
+              Search
+            </h2>
+          </Link>
         </div>
       )}
     </nav>

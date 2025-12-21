@@ -1,5 +1,4 @@
-import SubtitleList from "@/app/components/movies/v2/SubtitleList";
-import { getMovieIdFromImdb, getSubtitles } from "@/lib/subsource";
+import Link from "next/link";
 
 const MovieDetail = async ({ params }) => {
   const { id } = await params;
@@ -22,14 +21,22 @@ const MovieDetail = async ({ params }) => {
   const movie = await res.json();
   // console.log(movie);
 
-  // Get SubSource MovieId
-  const movieId = await getMovieIdFromImdb(movie.imdb_id);
+  const urlVideo = `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`;
+  const resVideo = await fetch(urlVideo, options);
+  const video = await resVideo.json();
+  // console.log("trailer : ", video);
 
-  // Fetch subtitles
-  const dataSubtitles = await getSubtitles(
-    movieId.data[0].movieId,
-    "indonesian"
-  );
+  const results = video?.results ?? [];
+
+  const trailer =
+    results.find(
+      (item) => item.type === "Trailer" && item.site === "YouTube"
+    ) ||
+    results.find((item) => item.type === "Teaser" && item.site === "YouTube") ||
+    results[0] ||
+    null;
+
+  // console.log(trailer);
 
   return (
     <section className="bg-[#030A1B] min-h-screen text-white">
@@ -47,23 +54,24 @@ const MovieDetail = async ({ params }) => {
         </div>
       </div>
 
-      <div className="max-w-[1240px] mx-auto px-4">
+      <div className="max-w-[1240px] mx-auto px-4 w-full">
         <div className="py-10 flex flex-col lg:flex-row gap-8">
-          <div className="w-full">
-            <iframe
-              loading="lazy"
-              src={`https://multiembed.mov/?video_id=${movie.id}&tmdb=1`}
-              title="Movie Trailer"
-              className="w-full h-full border-none aspect-video rounded-xl"
-              allowFullScreen
-            ></iframe>
-          </div>
+          {trailer && (
+            <div className="w-full lg:w-[900px] h-full !aspect-video">
+              <iframe
+                src={`https://www.youtube.com/embed/${trailer.key}?controls=0&modestbranding=1&rel=0`}
+                title="Movie Trailer"
+                className="w-full h-full rounded-xl border-none"
+                allowFullScreen
+              />
+            </div>
+          )}
 
-          <div className="flex flex-col gap-4">
+          <div className="w-fit flex flex-wrap flex-col gap-4">
             <h2 className="text-3xl font-semibold">Overview</h2>
             <p className="text-gray-300">{movie.overview}</p>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 text-gray-300">
+            <div className="flex flex-wrap gap-4 mt-6 text-gray-300">
               <div>
                 <h3 className="font-semibold text-white">Release Date</h3>
                 <p>{movie.release_date}</p>
@@ -85,10 +93,15 @@ const MovieDetail = async ({ params }) => {
                 <p>{movie.status}</p>
               </div>
             </div>
+
+            <Link
+              href={`/v2/detail/${id}/watch`}
+              className="px-8 py-3 rounded-lg text-base font-semibold bg-blue-700 w-fit hover:bg-blue-500 transition-colors cursor-pointer"
+            >
+              <span>Watch Full Movie Now!</span>
+            </Link>
           </div>
         </div>
-
-        <SubtitleList data={dataSubtitles.data}></SubtitleList>
       </div>
     </section>
   );

@@ -18,6 +18,21 @@ const EpisodeDetail = async ({ params }) => {
   const episode = await res.json();
   // console.log(episode)
 
+  // fetch video trailer
+  const urlVideo = `https://api.themoviedb.org/3/tv/${id}/videos?language=en-US`;
+  const resVideo = await fetch(urlVideo, options);
+  const video = await resVideo.json();
+  const results = video?.results ?? [];
+  const trailer =
+    results.find(
+      (item) => item.type === "Trailer" && item.site === "YouTube"
+    ) ||
+    results.find((item) => item.type === "Teaser" && item.site === "YouTube") ||
+    results[0] ||
+    null;
+
+  // console.log("trailer =", trailer);
+
   return (
     <section className="bg-[#030A1B] min-h-screen text-white">
       {/* Banner Episode */}
@@ -41,16 +56,24 @@ const EpisodeDetail = async ({ params }) => {
       </div>
 
       {/* Iframe Player */}
-      <div className="max-w-[1240px] mx-auto px-4 mt-10">
-        <div className="aspect-video w-full overflow-hidden rounded-xl border border-white/10 shadow-lg">
-          <iframe
-            src={`https://multiembed.mov/?video_id=${id}&tmdb=1&s=${season_number}&e=${episode_number}`}
-            allowFullScreen
-            loading="lazy"
-            className="w-full h-full"
-          ></iframe>
+      {trailer && (
+        <div className="max-w-[1240px] mx-auto px-4 mt-10 flex flex-col gap-y-10 w-full items-center">
+          <div className="aspect-video w-full overflow-hidden rounded-xl border border-white/10 shadow-lg">
+            <iframe
+              src={`https://www.youtube.com/embed/${trailer.key}?controls=0&modestbranding=1&rel=0`}
+              allowFullScreen
+              loading="lazy"
+              className="w-full h-full"
+            ></iframe>
+          </div>
+          <Link
+            href={`/v2/series/${id}/season/${season_number}/episode/${episode_number}/watch`}
+            className="px-8 py-3 rounded-lg text-base font-semibold bg-blue-700 w-fit hover:bg-blue-500 transition-colors cursor-pointer"
+          >
+            <span>Watch Episode Now!</span>
+          </Link>
         </div>
-      </div>
+      )}
 
       {/* Info Tambahan */}
       <div className="max-w-[1240px] mx-auto px-4 py-10">
@@ -92,9 +115,7 @@ const EpisodeDetail = async ({ params }) => {
                       className="w-full aspect-auto object-cover rounded-lg mb-3"
                     />
                     <h3 className="text-sm font-semibold">{star.name}</h3>
-                    <p className="text-xs text-gray-400">
-                      as {star.character}
-                    </p>
+                    <p className="text-xs text-gray-400">as {star.character}</p>
                   </div>
                 ))}
               </div>

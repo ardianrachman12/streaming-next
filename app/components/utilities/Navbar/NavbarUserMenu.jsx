@@ -35,7 +35,7 @@ export default function NavbarUserMenu() {
       {/* BUTTON */}
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-3 py-1.5 bg-white/10 text-white rounded-lg hover:bg-white/20 transition"
+        className="flex items-center gap-2 px-3 py-1.5 bg-white/10 text-white rounded-lg hover:bg-white/20 transition cursor-pointer"
       >
         {isLoggedIn ? (
           <>
@@ -64,7 +64,7 @@ export default function NavbarUserMenu() {
 
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-2 hover:bg-red-100 text-red-600"
+                className="w-full text-left px-4 py-2 hover:bg-red-100 text-red-600 cursor-pointer"
               >
                 Logout
               </button>
@@ -73,17 +73,17 @@ export default function NavbarUserMenu() {
             <>
               <button
                 onClick={() => router.push("/login")}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                className="w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
               >
                 Login
               </button>
 
-              <button
+              {/* <button
                 onClick={() => router.push("/register")}
                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
               >
                 Register
-              </button>
+              </button> */}
             </>
           )}
         </div>
