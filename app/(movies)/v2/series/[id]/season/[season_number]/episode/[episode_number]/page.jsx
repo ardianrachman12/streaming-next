@@ -60,7 +60,7 @@ const EpisodeDetail = async ({ params }) => {
         <div className="max-w-[1240px] mx-auto px-4 mt-10 flex flex-col gap-y-10 w-full items-center">
           <div className="aspect-video w-full overflow-hidden rounded-xl border border-white/10 shadow-lg">
             <iframe
-              src={`https://www.youtube.com/embed/${trailer.key}?controls=0&modestbranding=1&rel=0`}
+              src={`https://www.youtube.com/embed/${trailer.key}?controls=1&modestbranding=1&rel=0`}
               allowFullScreen
               loading="lazy"
               className="w-full h-full"

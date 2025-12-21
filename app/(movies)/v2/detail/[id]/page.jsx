@@ -59,7 +59,7 @@ const MovieDetail = async ({ params }) => {
           {trailer && (
             <div className="w-full lg:w-[900px] h-full !aspect-video">
               <iframe
-                src={`https://www.youtube.com/embed/${trailer.key}?controls=0&modestbranding=1&rel=0`}
+                src={`https://www.youtube.com/embed/${trailer.key}?controls=1&modestbranding=1&rel=0`}
                 title="Movie Trailer"
                 className="w-full h-full rounded-xl border-none"
                 allowFullScreen
