@@ -31,9 +31,9 @@ export default function LoginPage() {
       setUser(user);
       setIsRedirecting(true);
 
-      setTimeout(() => {
+      // setTimeout(() => {
         router.replace(redirectTo);
-      }, 500);
+      // }, 500);
     } catch (err) {
       setError(
         err.response?.data?.message || "Login gagal, periksa email & password"
